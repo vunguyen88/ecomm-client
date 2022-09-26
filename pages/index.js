@@ -94,7 +94,7 @@ const Landing =  () => {
 
 Landing.getInitialProps = async (context, client, currentUser) => {
     try {
-        const { data } = await client.get('http://localhost:8001/api/products');
+        const { data } = await client.get('https://product-acd3hddtua-uc.a.run.app/api/products');
         return { products: data };
     } catch (err) {
         //console.log(err)
