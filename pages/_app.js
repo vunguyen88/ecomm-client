@@ -58,7 +58,7 @@ AppComponent.getInitialProps = async (appContext) => {
     try {
         const currentUserRes = await client.get('https://auth-acd3hddtua-uc.a.run.app/api/users/currentuser');
         if (appContext.Component.getInitialProps) pageProps = await appContext.Component.getInitialProps(appContext.ctx, client);
-        return {pageProps, products: data, currentUser}
+        return {pageProps, products: data, currentUser: currentUserRes.data}
     }
     catch (err) {
         if (appContext.Component.getInitialProps) pageProps = await appContext.Component.getInitialProps(appContext.ctx, client);

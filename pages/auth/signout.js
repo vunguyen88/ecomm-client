@@ -7,6 +7,8 @@ import styles from '../../styles/auth.module.scss';
 const SignOut = () => {
     const { doRequest } = useRequest({
         url: 'https://auth-acd3hddtua-uc.a.run.app/api/users/signout',
+        // url: 'http://host.docker.internal:8000/api/users/signout',
+        // url: 'http://localhost:8000/api/users/signout',
         method: 'post',
         body: {},
         onSuccess: () => Router.push('/')

@@ -14,6 +14,8 @@ const SignUp = () => {
     //const [errors, setErrors] = useState([]);
     const { doRequest, errors } = useRequest({
         url: 'https://auth-acd3hddtua-uc.a.run.app/api/users/signup',
+        // url: 'http://host.docker.internal:8000/api/users/signup',
+        // url: 'http://localhost:8000/api/users/signup',
         method: 'post',
         body: {
             email,

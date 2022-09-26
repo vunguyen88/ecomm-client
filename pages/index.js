@@ -95,6 +95,7 @@ const Landing =  () => {
 Landing.getInitialProps = async (context, client, currentUser) => {
     try {
         const { data } = await client.get('https://product-acd3hddtua-uc.a.run.app/api/products');
+        // const { data } = await client.get('http://host.docker.internal:8001/api/products');
         return { products: data };
     } catch (err) {
         //console.log(err)

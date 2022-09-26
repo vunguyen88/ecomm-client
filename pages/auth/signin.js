@@ -13,6 +13,8 @@ const SignIn = ({ currentUser }) => {
 
     const { doRequest, errors } = useRequest({
         url: 'https://auth-acd3hddtua-uc.a.run.app/api/users/signin',
+        // url: 'http://host.docker.internal:8000/api/users/signin',
+        // url: 'http://localhost:8000/api/users/signin',
         method: 'post',
         body: {
           email,
