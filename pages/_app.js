@@ -54,15 +54,23 @@ const AppComponent = ({ Component, pageProps, products, currentUser }) => {
 AppComponent.getInitialProps = async (appContext) => {    
     const client = buildClient(appContext.ctx); 
     let pageProps = {};
-    const { data } = await client.get('https://product-acd3hddtua-uc.a.run.app/api/products');
+    //const { data } = await client.get('https://product-acd3hddtua-uc.a.run.app/api/products');
     try {
-        const currentUserRes = await client.get('https://auth-acd3hddtua-uc.a.run.app/api/users/currentuser');
+        //const currentUserRes = await client.get('https://auth-acd3hddtua-uc.a.run.app/api/users/currentuser');
         if (appContext.Component.getInitialProps) pageProps = await appContext.Component.getInitialProps(appContext.ctx, client);
-        return {pageProps, products: data, currentUser: currentUserRes.data}
+        return {
+            pageProps, 
+            //products: data, 
+            //currentUser: currentUserRes.data
+        }
     }
     catch (err) {
         if (appContext.Component.getInitialProps) pageProps = await appContext.Component.getInitialProps(appContext.ctx, client);
-        return {pageProps, products: data, currentUser: null}
+        return {
+            pageProps, 
+            //products: data, 
+            currentUser: null
+        }
     }
 };
 
