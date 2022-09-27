@@ -10,7 +10,8 @@ const AuthVerify = ({ currentUser }) => {
 
     const [authNumber, setAuthNumber] = useState('');
     const { userAuthInfo } = useContext(UserAuthContext);
-
+    const { updateUserAuthInfo } = useContext(UserAuthContext);
+    
     const { doRequest, errors } = useRequest({
         url: 'https://auth-acd3hddtua-uc.a.run.app/api/users/auth-verify',
         // url: 'http://host.docker.internal:8000/api/users/auth-verify',

@@ -90,15 +90,18 @@ const Products = ({ currentUser, products }) => {
 };
 
 Products.getInitialProps = async (context, client, currentUser) => {
+    console.log('client in products initial props ', client.get)
 
     try {
         const { data } = await client.get('https://product-acd3hddtua-uc.a.run.app/api/products');
+        console.log('data in get initial props products ', data)
         // const productRes = await fetch('https://product-acd3hddtua-uc.a.run.app/api/products');
         // const productRes = await fetch('http://host.docker.internal:8001/api/products');
         // const data = await productRes.clone().json();
         //console.log('data in products ', data)
         return { products: data };
     } catch (err) {
+        console.log('error in getinitialprops ', err)
         return {};
     }
 }

@@ -12,7 +12,7 @@ import { IoFileTrayStackedSharp } from 'react-icons/io5';
 
 const AppComponent = ({ Component, pageProps, products, currentUser }) => {
     const [cartItemCount, setCartItemCount] = useState(0);
-    const [userAuthInfo, setUserAuthInfo] = useState({});
+    const [userAuthInfo, setUserAuthInfo] = useState({isAuthenticated: false});
 
     const updateUserAuthInfo = (userAuthInfo) => {
         setUserAuthInfo(userAuthInfo);
@@ -54,23 +54,33 @@ const AppComponent = ({ Component, pageProps, products, currentUser }) => {
 AppComponent.getInitialProps = async (appContext) => {    
     const client = buildClient(appContext.ctx); 
     let pageProps = {};
+    let currentUser = {};
     //const { data } = await client.get('https://product-acd3hddtua-uc.a.run.app/api/products');
+    
     try {
-        //const currentUserRes = await client.get('https://auth-acd3hddtua-uc.a.run.app/api/users/currentuser');
+        //currentUser = await client.get('https://auth-acd3hddtua-uc.a.run.app/api/users/currentuser');
         if (appContext.Component.getInitialProps) pageProps = await appContext.Component.getInitialProps(appContext.ctx, client);
         return {
             pageProps, 
             //products: data, 
-            //currentUser: currentUserRes.data
+            //currentUser: {...currentUser.data}
         }
     }
     catch (err) {
-        if (appContext.Component.getInitialProps) pageProps = await appContext.Component.getInitialProps(appContext.ctx, client);
-        return {
-            pageProps, 
-            //products: data, 
-            currentUser: null
-        }
+       console.log('error in _app ', err)
+    }
+    finally {
+        if (currentUser === {}) {
+            if( appContext.Component.getInitialProps) {
+                pageProps = await appContext.Component.getInitialProps(appContext.ctx, client);
+            }
+            return {pageProps, products: [...data], currentUser: {}}
+        } else {
+            if( appContext.Component.getInitialProps) {
+                pageProps = await appContext.Component.getInitialProps(appContext.ctx, client);
+            }
+            return {pageProps, products: [...data], currentUser:{...currentUser.data}}
+       }
     }
 };
 

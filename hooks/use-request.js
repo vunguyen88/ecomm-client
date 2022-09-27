@@ -17,7 +17,7 @@ const useRequest = ({ url, method, body, onSuccess }) => {
           let userAuthInfo = response.data;
 
           // update user context
-          updateUserAuthInfo(userAuthInfo)
+          updateUserAuthInfo({isAuthenticated: true, ...userAuthInfo})
   
           // redirect page when success call
           if (onSuccess) {
@@ -41,7 +41,7 @@ const useRequest = ({ url, method, body, onSuccess }) => {
       } else if (body.authNumber) {
         if (body.authNumber && body.authNumber.length === 6) {
           const response = await axios[method](url, { ...body, ...props });
-          
+          console.log('res after verified auth ', response.data)
           // redirect page when success call
           if (onSuccess) {
             onSuccess(response.data);
@@ -60,6 +60,16 @@ const useRequest = ({ url, method, body, onSuccess }) => {
           </div>
           )
         }
+        // user signout
+      } else if (url.slice(-7) === 'signout') {
+        const response = await axios[method](url, { ...body, ...props });
+        console.log('res after signout ', response.data);
+        updateUserAuthInfo({isAuthenticated: false});
+
+        if (onSuccess) {
+          onSuccess(response.data);
+        }
+        return response.data;
         // no phonenumber process with signin and update user context
       } else {
         try {
@@ -67,7 +77,7 @@ const useRequest = ({ url, method, body, onSuccess }) => {
           let userAuthInfo = response.data;
   
           // update user context
-          updateUserAuthInfo(userAuthInfo)
+          updateUserAuthInfo({...userAuthInfo})
   
           if (onSuccess) {
             onSuccess(response.data);

@@ -13,13 +13,15 @@ import UserAuthContext from '../context/userAuthContext';
 const HomeNav = ({ currentUser, products }) => {
     console.log('current user nav ', currentUser)
     const [ cartItem, setCartItem ] = useState(0);
+    const { userAuthInfo } = useContext(UserAuthContext);
     const { cartItemCount } = useContext(CartItemContext);
-    //const { userAuthInfo } = useContext(UserAuthContext);
+    //const [userAuthInfo, setUserAuthInfo] = useState({});
     const [ searchPrefix, setSearchPrefix ] = useState("");
     const [ suggestionList, setSuggestionList ] = useState([]);
     const [ suggestion, setSuggestion ] = useState("");
     const [ dropDownOpen, setDropDownOpen ] = useState(false);
     
+    console.log('USER AUTH INFO IN NAV ', userAuthInfo)
     // initial trie data structure
     let searchTrie = new Trie();
 
@@ -167,11 +169,11 @@ const HomeNav = ({ currentUser, products }) => {
                             <BsBag className={style.nav_icon} />
                             {cartItemCount && cartItemCount > 0 ? <span className={style.cart_notification}>{cartItemCount}</span> : null}
                         </Nav.Link>
-                        {currentUser
+                        {currentUser && currentUser.isAuthenticated || userAuthInfo.isAuthenticated
                             ? <Nav.Link href="/admin"><BsGrid1X2 className={style.nav_icon} /></Nav.Link>
                             : null
                         }
-                        {currentUser
+                        {currentUser && currentUser.isAuthenticated || userAuthInfo.isAuthenticated
                             ? <Nav.Link href="/auth/signout"><BsBoxArrowInRight className={style.nav_icon} /></Nav.Link>
                             : <Nav.Link href="/auth/signin"><BsPerson className={style.nav_icon} /></Nav.Link>
                         }
@@ -196,5 +198,20 @@ const HomeNav = ({ currentUser, products }) => {
 //         return {};
 //     }
 // }
+HomeNav.getInitialProps = async (context, client, currentUser) => {
+
+    try {
+        let currentUser = await client.get('https://auth-acd3hddtua-uc.a.run.app/api/users/currentuser');
+        console.log('currentUser nav ', currentUser.data)
+        // const { data } = await client.get('https://product-acd3hddtua-uc.a.run.app/api/products');
+        // const productRes = await fetch('https://product-acd3hddtua-uc.a.run.app/api/products');
+        // const productRes = await fetch('http://host.docker.internal:8001/api/products');
+        // const data = await productRes.clone().json();
+        //console.log('data in products ', data)
+        return { currentUser: currentUser.data };
+    } catch (err) {
+        return {currentUser: {isAuthenticated: false}};
+    }
+}
 
 export default HomeNav;
