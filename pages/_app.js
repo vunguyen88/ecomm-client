@@ -69,19 +69,19 @@ AppComponent.getInitialProps = async (appContext) => {
     catch (err) {
        console.log('error in _app ', err)
     }
-    finally {
-        if (currentUser === {}) {
-            if( appContext.Component.getInitialProps) {
-                pageProps = await appContext.Component.getInitialProps(appContext.ctx, client);
-            }
-            return {pageProps, products: [...data], currentUser: {}}
-        } else {
-            if( appContext.Component.getInitialProps) {
-                pageProps = await appContext.Component.getInitialProps(appContext.ctx, client);
-            }
-            return {pageProps, products: [...data], currentUser:{...currentUser.data}}
-       }
-    }
+    // finally {
+    //     if (currentUser === {}) {
+    //         if( appContext.Component.getInitialProps) {
+    //             pageProps = await appContext.Component.getInitialProps(appContext.ctx, client);
+    //         }
+    //         return {pageProps, products: [...data], currentUser: {}}
+    //     } else {
+    //         if( appContext.Component.getInitialProps) {
+    //             pageProps = await appContext.Component.getInitialProps(appContext.ctx, client);
+    //         }
+    //         return {pageProps, products: [...data], currentUser:{...currentUser.data}}
+    //    }
+    // }
 };
 
 export default AppComponent;
